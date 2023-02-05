@@ -1,7 +1,5 @@
-from datetime import datetime
-
-
 def get_birthdays_per_week(users):
+    from datetime import datetime, timedelta
     current_datetime = datetime.now()
     res = []
     mon = []
@@ -12,10 +10,13 @@ def get_birthdays_per_week(users):
     today = current_datetime.date()
     for person_dict in users:
         b_day = person_dict.get("birthday")
-        difference = b_day-today
+        monday = today + timedelta(days=(6-today.day))
+        difference = b_day.date()-monday
         str_dif = str(difference)
         s = str_dif.split(" ")
-        if int(s[0]) <= 7:
+        if s[0] == "0:00:00":
+            s = ["0"]
+        if int(s[0]) <= 4 and int(s[0]) >= -2:
             if b_day.weekday() == 0 or b_day.weekday() == 5 or b_day.weekday() == 6:
                 mon.append(person_dict.get("name"))
             if b_day.weekday() == 1:
@@ -54,3 +55,6 @@ def get_birthdays_per_week(users):
 
     cong = "".join(res)
     print(cong)
+
+
+get_birthdays_per_week(users)
