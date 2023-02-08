@@ -9,8 +9,9 @@ def get_birthdays_per_week(users):
     fri = []
     today = current_datetime.date()
     for person_dict in users:
-        b_day = person_dict.get("birthday")
-        monday = today + timedelta(days=(6-today.day))
+        bday = person_dict.get("birthday")
+        b_day = datetime(year=2023, month=bday.month, day=bday.day)
+        monday = today + timedelta(days=(7-int(today.weekday())))
         difference = b_day.date()-monday
         str_dif = str(difference)
         s = str_dif.split(" ")
